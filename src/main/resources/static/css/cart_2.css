@@ -1,0 +1,24 @@
+/*Navbar*/
+.navbar-brand {
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 900;
+    color:#3aa448;
+  }
+  .shop{
+    color: #3aa448;
+  }
+  nav ul li a{
+    color: #a9a9a9;
+    font-size: 22px;
+    margin:auto 10px
+  }
+
+  nav ul li a:hover{
+  color:#683aa4 ;
+  }
+
+  .masthead {
+     background-size: cover;
+      min-height: 60vh;
+    }

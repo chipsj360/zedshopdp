@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="prefix.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/style.css">
+    <title>Sign Up</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+  <div class="">
+    <i class="bi bi-cart-dash px-2" style="font-size: 2rem; color: rgb(47, 108, 223);"></i>
+    <a class="navbar-brand text-secondary" th:href="@{/}">ZedShop</a>
+  </div>
+
+</nav>
+
+<div class="main">
+  <!-- Sign up form -->
+  <section class="signup">
+    <div class="container">
+      <div class="signup-content">
+        <div class="signup-form">
+          <h2 class="form-title">Sign up</h2>
+          <form th:action="@{/process_register}" class="register-form" id="register-form" th:object="${user}" method="post">
+
+            <div th:if="${emailExists}" class="alert alert-danger" role="alert">
+              Email Already Exists, it must be unique.
+            </div>
+
+            <div th:if="${usernameExists}" class="alert alert-danger" role="alert">
+              Username Already Exists, it must be unique.
+            </div>
+            <div class="form-group">
+              <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+              <input type="text" name="firstName"  placeholder="First Name" th:field="*{firstName}" required/>
+            </div>
+            <div class="form-group">
+              <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+              <input type="text" name="lastName"  placeholder="Last Name" th:field="*{lastName}" required/>
+            </div>
+            <div class="form-group">
+              <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+              <input type="text" name="userName" id="name" placeholder=" username" th:field="*{userName}" required/>
+            </div>
+            <div class="form-group">
+              <label for="email"><i class="zmdi zmdi-email"></i></label>
+              <input type="email" name="email" id="email" placeholder="Your Email" th:field="*{email}" required/>
+            </div>
+            <div class="form-group">
+              <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+              <input type="password" name="pass" id="pass" placeholder="Password" th:field="*{password}" required/>
+            </div>
+
+            <div class="form-group">
+              <input type="checkbox" name="agree-term" id="agree-term" class="agree-term"  required/>
+              <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+            </div>
+            <div class="form-group form-button">
+              <input type="submit" name="signup" id="signup" class="form-submit" value="Register" required/>
+            </div>
+          </form>
+        </div>
+        <div class="signup-image">
+          <figure><img src="images/signup.png" alt="sing up image"></figure>
+          <a th:href="@{/login}" class="signup-image-link">I am already member</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/offcanvas-navbar/">
+    <!--<link rel="stylesheet" href="/css/checkout.css">-->
+    <link rel="stylesheet" href="/css/footer.css">
+    <link href="/css/offcanvas-navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/prefix.css">
+    <title>Checkout</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light shadow mb-4" aria-label="Main navigation">
+    <div class="container-fluid">
+        <i class="bi bi-cart-dash px-2" style="font-size: 2rem; color: rgb(47, 108, 223);"></i>
+        <a class="navbar-brand" th:href="@{/}">ZedShop</a>
+        <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">About</a>
+                </li>
+                <!--                <li class="nav-item" >-->
+                <!--                    <a class="nav-link ;. fw-lighter" th:href="@{/cart}"><i class="bi bi-cart-check-fill"></i></a>-->
+                <!--                </li>-->
+                <li class="nav-item px-3">
+                    <a class="nav-link" th:href="@{/cart}">
+                        <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                        <span class="badge bg-secondary">[[${session.totalItems == null} ? '0' : ${session.totalItems}]]</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown" th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-circle-o me-2"></i><span th:text="${#authentication.name}"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end w-220px" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item active" href="/profile">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item active" href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" th:unless="${#authorization.expression('isAuthenticated()')}">
+                    <a class="nav-link active" th:href="@{/login}">Login</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<div class="cart-box-main mt-4">
+    <div class="container">
+        <form class="needs-validation" novalidate>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="checkout-address">
+                        <div class="title-left">
+                            <h3>Billing address</h3>
+                        </div>
+
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="firstname">firstname *</label>
+                            <p th:text="${user.firstName}" id="firstname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastname">lastname *</label>
+                            <p th:text="${user.lastName}" id="lastname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email">email *</label>
+                            <p th:text="${user.email}" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="username">Username *</label>
+                            <p th:text="${user.userName}" id="username">
+                        </div>
+
+                        <hr class="mb-4">
+                        <hr class="mb-4">
+                        <div class="title"><span>Payment Methods</span></div>
+                        <div class="d-block my-3">
+                            <div class="custom-control custom-radio">
+                                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input"
+                                       required>
+                                <label class="custom-control-label" for="debit">Cash</label>
+                            </div>
+                        </div>
+                        <hr class="mb-1">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="odr-box">
+                            <div class="title-left">
+                                <h3>Shopping cart</h3>
+                            </div>
+                            <div class="rounded p-2 bg-light">
+                                <div class="media mb-2 border-bottom" th:each="products : ${product}">
+                                    <div class="media-body"><a href="product-detail.html"
+                                                               th:text="${products.name}"> </a>
+                                        <div class="small text-muted">Price: $[[${products.costPrice}]] <span
+                                                class="mx-2">|</span> Qty: [[${products.description}]] <span
+                                                class="mx-2">|</span> Subtotal: $[[${products.costPrice}]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12">
+                        <div class="order-box">
+                            <div class="title-left">
+                                <h2><b>Your order</b></h2>
+                            </div>
+                            <div class="d-flex">
+                                <div class="font-weight-bold">Product</div>
+                                <div class="ml-auto font-weight-bold">Total</div>
+                            </div>
+                            <hr class="my-1">
+                            <div class="d-flex">
+                                <h4>Sub Total</h4>
+                                <div class="ml-auto font-weight-bold" th:text="${ '$' + product.costPrice}"></div>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Discount</h4>
+                                <div class="ml-auto font-weight-bold"> $0</div>
+                            </div>
+                            <hr class="my-1">
+                            <div class="d-flex">
+                                <h4>Tax</h4>
+                                <div class="ml-auto font-weight-bold"> $2</div>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Shipping Cost</h4>
+                                <div class="ml-auto font-weight-bold"> Free</div>
+                            </div>
+                            <hr>
+                            <div class="d-flex gr-total">
+                                <h5>Grand Total</h5>
+                                <div class="ml-auto font-weight-bold" th:text="${ '$' + product.costPrice}"></div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <a th:href="@{/save-direct-order/{/id} (id=${product.id})}" class="btn btn-success btn-lg btn-block" >Place Order</a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script src="/js/offcanvas-navbar.js"></script>
+</body>
+</html>
